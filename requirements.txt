@@ -1,0 +1,6 @@
+scapy
+typer
+rich
+fastapi
+uvicorn
+pytest
