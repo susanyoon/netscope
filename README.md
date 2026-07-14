@@ -1,3 +1,4 @@
+![CI](https://github.com/susanyoon/netscoe/actions/workflows/ci.yml/badge.svg)
 # NetScope
 NetScope is a Python-based network traffic analysis platform that processes PCAP files and extracts actionable insights about network activity.
 
