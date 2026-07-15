@@ -9,12 +9,17 @@ description = "Network traffic analyzer for PCAP files"
 requires-python = ">=3.10"
 dependencies = [
     "scapy",
+    "typer",
+    "rich",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest",
 ]
+
+[project.scripts]
+netscope = "netscope.cli:app"
 
 [tool.setuptools.packages.find]
 include = ["netscope*"]
