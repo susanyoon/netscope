@@ -25,3 +25,15 @@ def test_sizes_are_positive_integers():
     for pkt in packets:
         assert isinstance(pkt.size, int)
         assert pkt.size > 0
+
+
+def test_ports_extracted():
+    packets = parse_pcap("tests/sample.pcap")
+    tcp_packets = [p for p in packets if p.protocol == "TCP"]
+    assert all (p.src_port is not None and p.dst_port is not None for p in tcp_packets)
+
+
+def test_timestamps_are_floats():
+    packets = parse_pcap("tests/sample.pcap")
+    for pkt in packets:
+        assert isinstance(pkt.timestamp, float)

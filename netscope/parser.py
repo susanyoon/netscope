@@ -1,4 +1,4 @@
-from scapy.all import rdpcap, IP
+from scapy.all import rdpcap, IP, TCP, UDP
 
 from netscope.models import PacketInfo
 
@@ -19,13 +19,28 @@ def parse_pcap(file_path: str) -> list[PacketInfo]:
     results = []
 
     for packet in packets:
-        if IP in packet:
-            results.append(
-                PacketInfo(
-                    src_ip=packet[IP].src,
-                    dst_ip=packet[IP].dst,
-                    protocol=packet[IP].payload.name,
-                    size=len(packet),
-                )
+        if IP not in packet:
+            continue
+
+        src_port = None
+        dst_port = None
+
+        if TCP in packet:
+            src_port = packet[TCP].sport
+            dst_port = packet[TCP].dport
+        elif UDP in packet:
+            src_port = packet[UDP].sport
+            dst_port = packet[UDP].dport
+
+        results.append(
+            PacketInfo(
+                timestamp=float(packet.time),
+                src_ip=packet[IP].src,
+                dst_ip=packet[IP].dst,
+                src_port=src_port,
+                dst_port=dst_port,
+                protocol=packet[IP].payload.name,
+                size=len(packet),
             )
+        )
     return results
