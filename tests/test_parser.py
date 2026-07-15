@@ -1,5 +1,6 @@
 from netscope.models import PacketInfo
 from netscope.parser import parse_pcap
+from netscope.flows import aggregate_flows
 
 
 def test_parse_pcap_returns_all_ip_packets():
@@ -37,3 +38,9 @@ def test_timestamps_are_floats():
     packets = parse_pcap("tests/sample.pcap")
     for pkt in packets:
         assert isinstance(pkt.timestamp, float)
+
+
+def test_sample_pcap_produces_three_flows():
+    packets = parse_pcap("tests/sample.pcap")
+    flows = aggregate_flows(packets)
+    assert len(flows) == 3
