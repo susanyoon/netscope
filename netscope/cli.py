@@ -4,6 +4,8 @@ from rich.table import Table
 
 from netscope.flows import aggregate_flows
 from netscope.parser import parse_pcap
+from netscope.stats import protocol_distribution, top_talkers
+
 
 app = typer.Typer(help="NetScope: network traffic analyzer for PCAP files.")
 console = Console()
@@ -23,9 +25,7 @@ def summary(pcap_file: str):
     total_bytes = sum(p.size for p in packets)
     duration = max(p.timestamp for p in packets) - min(p.timestamp for p in packets)
 
-    protocols: dict[str, int] = {}
-    for p in packets:
-        protocols[p.protocol] = protocols.get(p.protocol, 0) + 1
+    protocols = protocol_distribution(packets)
     
     console.print(f"\n[bold]Summary for[/bold] {pcap_file}\n")
     console.print(f"  Packets:  {len(packets)}")
@@ -39,6 +39,14 @@ def summary(pcap_file: str):
     for proto, count in sorted(protocols.items(), key=lambda x: -x[1]):
         table.add_row(proto, str(count))
     console.print(table)
+
+    talkers = top_talkers(packets)
+    talker_table = Table(title="Top Talkers")
+    talker_table.add_column("Source IP")
+    talker_table.add_column("Bytes", justify="right")
+    for ip, byte_count in talkers:
+        talker_table.add_row(ip, f"{byte_count:,}")
+    console.print(talker_table)
 
 
 @app.command()
