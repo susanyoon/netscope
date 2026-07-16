@@ -30,6 +30,8 @@ netscope summary capture.pcap    # high-level traffic summary
 netscope flows capture.pcap      # flow table, sorted by bytes
 netscope flows capture.pcap --sort-by packets
 '''
+<img width="488" height="172" alt="image" src="https://github.com/user-attachments/assets/29d08eba-d9fd-4a2b-9df2-b621e6460687" />
+
 
 ## Running Tests
 
