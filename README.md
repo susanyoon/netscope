@@ -9,7 +9,7 @@ NetScope is a Python-based network traffic analysis platform that processes PCAP
 - [x] Parse PCAP files (IP, TCP, UDP w/ ports & timestamps)
 - [x] Aggregate network flows by 5-tuple
 - [x] Traffic summaries and protocol breakdown (CLI)
-- [ ] Protocol statistics and visualizations
+- [x] Protocol statistics and visualizations
 - [ ] SQLite storage
 - [ ] REST API
 - [ ] Docker support
@@ -32,6 +32,13 @@ netscope flows capture.pcap --sort-by packets
 ```
 <img width="488" height="172" alt="image" src="https://github.com/user-attachments/assets/29d08eba-d9fd-4a2b-9df2-b621e6460687" />
 
+## Charts
+
+`netscope chart capture.pcap` generates visualizations:
+
+![Traffic over time](docs/traffic_over_time.png)
+![Protocol distribution](docs/protocols.png)
+![Top talkers](docs/top_talkers.png)
 
 ## Running Tests
 
@@ -50,3 +57,4 @@ pytest
 ## Project Status
 Under active devlopment.
 See [Issues](https://github.com/susanyoon/netscope/issues) for the roadmap.
+
