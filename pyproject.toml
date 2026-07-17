@@ -11,6 +11,7 @@ dependencies = [
     "scapy",
     "typer",
     "rich",
+    "matplotlib",
 ]
 
 [project.optional-dependencies]

@@ -1,3 +1,10 @@
+# Prevent generated output from being committed
+charts/
+
+# Ensure sample.pcap file NEVER lands in project folder
+*.pcap
+!tests/sample.pcap
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

@@ -2,9 +2,16 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
+from netscope.charts import(
+    chart_protocol_distribution,
+    chart_top_talkers,
+    chart_traffic_over_time,
+)
 from netscope.flows import aggregate_flows
 from netscope.parser import parse_pcap
 from netscope.stats import protocol_distribution, top_talkers
+
+from pathlib import Path
 
 
 app = typer.Typer(help="NetScope: network traffic analyzer for PCAP files.")
@@ -75,6 +82,26 @@ def flows(pcap_file: str, sort_by: str="bytes"):
         table.add_row(src, dst, f.protocol, str(f.packet_count), f"{f.total_bytes:,}")
     
     console.print(table)
+
+@app.command()
+def chart(pcap_file: str, output_dir: str="charts"):
+    """
+    Generate PNG charts from a PCAP file.
+    """
+    packets = parse_pcap(pcap_file)
+    if not packets:
+        console.print("[yellow]No IP packets found in this capture.[/yellow]")
+        raise typer.Exist(code=1)
+    
+    out = Path(output_dir)
+    out.mkdir(parents=True, exist_ok=True)
+
+    chart_protocol_distribution(packets, str(out / "protocols.png"))
+    chart_top_talkers(packets, str(out / "top_talkers.png"))
+    chart_traffic_over_time(packets, str(out / "traffic_over_time.png"))
+
+    console.print(f"[green]Charts written to {out}/[/green]")
+
 
 
 if __name__ == "__main__":
