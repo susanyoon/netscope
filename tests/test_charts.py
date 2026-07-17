@@ -17,4 +17,4 @@ def test_charts_create_png_files(tmp_path):
         out = tmp_path / name
         func(packets, str(out))
         assert out.exists()
-        assert out.stat(),st_size > 0
+        assert out.stat().st_size > 0
