@@ -10,7 +10,7 @@ NetScope is a Python-based network traffic analysis platform that processes PCAP
 - [x] Aggregate network flows by 5-tuple
 - [x] Traffic summaries and protocol breakdown (CLI)
 - [x] Protocol statistics and visualizations
-- [ ] SQLite storage
+- [x] SQLite storage
 - [ ] REST API
 - [ ] Docker support
 - [ ] Basic anomaly detection
