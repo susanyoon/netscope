@@ -1,3 +1,6 @@
+#Prevent generated output from being committed
+*.db
+
 # Prevent generated output from being committed
 charts/
 

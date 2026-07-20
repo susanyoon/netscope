@@ -10,6 +10,7 @@ from netscope.charts import(
 from netscope.flows import aggregate_flows
 from netscope.parser import parse_pcap
 from netscope.stats import protocol_distribution, top_talkers
+from netscope.storage import Storage
 
 from pathlib import Path
 
@@ -102,6 +103,44 @@ def chart(pcap_file: str, output_dir: str="charts"):
 
     console.print(f"[green]Charts written to {out}/[/green]")
 
+@app.command()
+def analyze(pcap_file: str, db: str = "netscope.db"):
+    """Parse a PCAP file & save the analysis to the database."""
+    packets = parse_pcap(pcap_file)
+    if not packets:
+        console.print("[yellow]No IP packets found in this capture.[/yellow]")
+        raise typer.Exit(code=1)
+    
+    flow_list = aggregate_flows(packets)
+    storage = Storage(db)
+    analysis_id = storage.save_analysis(pcap_file, packets, flow_list)
+    storage.close()
+
+    console.print(
+        f"[green]Saved analysis #{analysis_id}[/green] "
+        f"({len(packets)} packets, {len(flow_list)} flows) to {db}"
+    )
+
+@app.command()
+def history(db: str = "netscope.db"):
+    """List saved analyses."""
+    storage = Storage(db)
+    analyses = storage.list_analyses()
+    storage.close()
+
+    if not analyses:
+        console.print("No saved analyses yet. Run [bold]netscope analyze[/bold] first.")
+        raise typer.Exit()
+    
+    table = Table(title="Saved Analyses")
+    table.add_column("ID", justify="right")
+    table.add_column("File")
+    table.add_column("Analyzed At")
+    table.add_column("Packets", justify="right")
+    table.add_column("Flows", justify="right")
+    for a in analyses:
+        table.add_row(str(a["id"]), a["pcap_file"], a["analyzed_at"][:19], str(a["packet_count"]), str(a["flow_count"]))
+    console.print(table)
 
 
 if __name__ == "__main__":
