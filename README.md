@@ -12,7 +12,7 @@ NetScope is a Python-based network traffic analysis platform that processes PCAP
 - [x] Protocol statistics and visualizations
 - [x] SQLite storage
 - [x] REST API
-- [ ] Docker support
+- [x] Docker support
 - [ ] Basic anomaly detection
 
 ## Installation
@@ -51,8 +51,8 @@ pytest
 - Scapy
 - Typer
 - Rich
-- FastAPI (planned)
-- SQLite (planned)
+- FastAPI 
+- SQLite 
 
 ## API
 
@@ -66,6 +66,14 @@ fastapi dev netscope/api.py
 ![API response](docs/netscope_api_postcall.png)
 
 Interactive docs at `http://127.0.0.1:8000/docs`
+
+## Running with Docker
+
+```bash
+docker compose up --build
+```
+
+Then open http://localhost:8000/docs
 
 
 ## Project Status
