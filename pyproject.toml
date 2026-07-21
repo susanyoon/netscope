@@ -12,6 +12,7 @@ dependencies = [
     "typer",
     "rich",
     "matplotlib",
+    "fastapi[standard]",
 ]
 
 [project.optional-dependencies]
