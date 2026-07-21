@@ -1,5 +1,6 @@
 import shutil
 import tempfile
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, UploadFile
@@ -9,7 +10,7 @@ from netscope.parser import parse_pcap
 from netscope.stats import protocol_distribution, top_talkers
 from netscope.storage import Storage
 
-DB_PATH = "netscope.db"
+DB_PATH = os.environ.get("NETSCOPE_DB", "netscope.db")
 
 app = FastAPI(
     title="NetScope API",
