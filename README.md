@@ -65,7 +65,7 @@ fastapi dev netscope/api.py
 ![API overview](docs/netscope_api_overall.png)
 ![API response](docs/netscope_api_postcall.png)
 
-Interactive docs at http://127.0.0.1:8000/docs
+Interactive docs at `http://127.0.0.1:8000/docs`
 
 
 ## Project Status
