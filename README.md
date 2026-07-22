@@ -15,6 +15,31 @@ NetScope is a Python-based network traffic analysis platform that processes PCAP
 - [x] Docker support
 - [x] Basic anomaly detection
 
+## Demo
+
+## Architecture
+
+NetScope is built in layers: a core analysis engine with 2 independent interfaces.
+
+```mermaid
+graph TD
+    PCAP[PCAP file] --> Parser[parser.py<br/>packet extraction]
+    Parser --> Models[models.py<br/>PacketInfo / Flow]
+    Models --> Stats[stats.py<br/>protocol, talkers, time buckets]
+    Models --> Anomalies[anomalies.py<br/>port scans, spikes]
+    Stats --> Charts[charts.py<br/>PNG generation]
+    Flows --> Storage[(storage.py<br/>SQLite)]
+    Models --> Storage
+    Storage --> CLI[cli.py<br/>Typer + Rich]
+    Storage --> API[api.py<br/>FastAPI]
+    Flows --> CLI
+    Stats --> CLI
+    Anomalies --> CLI
+    Anomalies --> API
+    API --> Docker[Docker container]
+```
+The engine modules have no knowledge of the CLI or API (both interfaces are thin wrapper over the same tested core).
+
 ## Installation
 
 ```bash
