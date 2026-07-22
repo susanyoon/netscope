@@ -13,7 +13,7 @@ NetScope is a Python-based network traffic analysis platform that processes PCAP
 - [x] SQLite storage
 - [x] REST API
 - [x] Docker support
-- [ ] Basic anomaly detection
+- [x] Basic anomaly detection
 
 ## Installation
 
@@ -29,7 +29,12 @@ pip install -e ".[dev]"
 netscope summary capture.pcap    # high-level traffic summary
 netscope flows capture.pcap      # flow table, sorted by bytes
 netscope flows capture.pcap --sort-by packets
+netscope chart capture.pcap      # generate PNG visualizations
+netscope analyze capture.pcap    # parse & save to database
+netscope history                 # list saved analyses
+netscope anomalies capture.pcap  # detect port scans & traffic spikes
 ```
+*CLI flow table output:*
 <img width="488" height="172" alt="image" src="https://github.com/user-attachments/assets/29d08eba-d9fd-4a2b-9df2-b621e6460687" />
 
 ## Charts
@@ -39,20 +44,6 @@ netscope flows capture.pcap --sort-by packets
 ![Traffic over time](docs/traffic_over_time.png)
 ![Protocol distribution](docs/protocols.png)
 ![Top talkers](docs/top_talkers.png)
-
-## Running Tests
-
-```bash
-pytest
-```
-
-## Tech Stack
-- Python
-- Scapy
-- Typer
-- Rich
-- FastAPI 
-- SQLite 
 
 ## API
 
@@ -72,11 +63,28 @@ Interactive docs at `http://127.0.0.1:8000/docs`
 ```bash
 docker compose up --build
 ```
+No Python installation required (the container includes everything)
+Then open `http://localhost:8000/docs`
 
-Then open http://localhost:8000/docs
+## Running Tests
 
+```bash
+pytest
+```
+
+## Tech Stack
+- Python
+- Matplotlib
+- pytest
+- Scapy
+- Typer
+- Rich
+- FastAPI 
+- SQLite
+- Docker
+- GitHub Actions 
 
 ## Project Status
-Under active devlopment.
+Under active development.
 See [Issues](https://github.com/susanyoon/netscope/issues) for the roadmap.
 
