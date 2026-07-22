@@ -2,6 +2,8 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
+
+from netscope.anomalies import detect_all
 from netscope.charts import(
     chart_protocol_distribution,
     chart_top_talkers,
@@ -140,6 +142,26 @@ def history(db: str = "netscope.db"):
     table.add_column("Flows", justify="right")
     for a in analyses:
         table.add_row(str(a["id"]), a["pcap_file"], a["analyzed_at"][:19], str(a["packet_count"]), str(a["flow_count"]))
+    console.print(table)
+
+@app.command()
+def anomalies(pcap_file: str):
+    """
+    Detect suspicious patterns in a PCAP file.
+    """
+    packets = parse_pcap(pcap_file)
+    findings = detect_all(packets)
+
+    if not findings:
+        console.print("[green]No anomalies detected.[/green]")
+        raise typer.Exit()
+    
+    table = Table(title="Anomalies")
+    table.add_column("Type")
+    table.add_column("Details")
+    for f in findings:
+        details = ", ".join(f"{k}={v}" for k, v in f.items() if k != "type")
+        table.add_row(f["type"], details)
     console.print(table)
 
 

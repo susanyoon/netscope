@@ -9,6 +9,7 @@ from netscope.flows import aggregate_flows
 from netscope.parser import parse_pcap
 from netscope.stats import protocol_distribution, top_talkers
 from netscope.storage import Storage
+from netscope.anomalies import detect_all
 
 DB_PATH = os.environ.get("NETSCOPE_DB", "netscope.db")
 
@@ -92,3 +93,15 @@ def get_stats(analysis_id: int):
             {"ip": ip, "bytes": b} for ip, b in top_talkers(packets)
         ],
     }
+
+@app.get("/analyses/{analysis_id}/anomalies")
+def get_anomalies(analysis_id: int):
+    """
+    Detect anomalies in a saved analysis.
+    """
+    storage = get_storage()
+    packets = storage.get_packets(analysis_id)
+    storage.close()
+    if not packets:
+        raise HTTPException(status_code=404, detail="Analysis not found.")
+    return detect_all(packets)
