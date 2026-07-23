@@ -110,6 +110,5 @@ pytest
 - GitHub Actions 
 
 ## Project Status
-Under active development.
-See [Issues](https://github.com/susanyoon/netscope/issues) for the roadmap.
+v1.0.0 released.
 
