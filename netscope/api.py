@@ -31,7 +31,7 @@ def root():
 async def create_analysis(file: UploadFile):
     """Upload a PCAP file & analyze it."""
     if not file.filename or not file.filename.endswith((".pcap", ".pcapng", ".cap")):
-        raise HTTPException(status_code=400, detail="File mnust be a PCAP capture.")
+        raise HTTPException(status_code=400, detail="File must be a PCAP capture.")
     
     with tempfile.NamedTemporaryFile(suffix=".pcap", delete=False) as tmp:
         shutil.copyfileobj(file.file, tmp)
@@ -39,8 +39,8 @@ async def create_analysis(file: UploadFile):
     
     try:
         packets = parse_pcap(tmp_path)
-    except Exception:
-        raise HTTPException(status_code=400, detail="Could not parse file as DCAP.")
+    except Exception:  # noqa: BLE001 - scapy raises varied errors on malformed input
+        raise HTTPException(status_code=400, detail="Could not parse file as PCAP.")
     finally:
         Path(tmp_path).unlink(missing_ok=True)
     
