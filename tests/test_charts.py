@@ -1,4 +1,4 @@
-from netscope.charts import(
+from netscope.charts import (
     chart_protocol_distribution,
     chart_top_talkers,
     chart_traffic_over_time,

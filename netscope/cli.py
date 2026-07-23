@@ -1,10 +1,11 @@
+from pathlib import Path
+
 import typer
 from rich.console import Console
 from rich.table import Table
 
-
 from netscope.anomalies import detect_all
-from netscope.charts import(
+from netscope.charts import (
     chart_protocol_distribution,
     chart_top_talkers,
     chart_traffic_over_time,
@@ -13,9 +14,6 @@ from netscope.flows import aggregate_flows
 from netscope.parser import parse_pcap
 from netscope.stats import protocol_distribution, top_talkers
 from netscope.storage import Storage
-
-from pathlib import Path
-
 
 app = typer.Typer(help="NetScope: network traffic analyzer for PCAP files.")
 console = Console()

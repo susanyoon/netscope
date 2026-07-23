@@ -1,15 +1,15 @@
+import os
 import shutil
 import tempfile
-import os
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, UploadFile
 
+from netscope.anomalies import detect_all
 from netscope.flows import aggregate_flows
 from netscope.parser import parse_pcap
 from netscope.stats import protocol_distribution, top_talkers
 from netscope.storage import Storage
-from netscope.anomalies import detect_all
 
 DB_PATH = os.environ.get("NETSCOPE_DB", "netscope.db")
 

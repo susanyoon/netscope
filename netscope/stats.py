@@ -2,6 +2,7 @@ from collections import Counter
 
 from netscope.models import PacketInfo
 
+
 def protocol_distribution(packets: list[PacketInfo]) -> dict[str, int]:
     """
     Count packets per protocol.

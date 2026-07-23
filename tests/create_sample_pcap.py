@@ -1,4 +1,4 @@
-from scapy.all import Ether, IP, TCP, UDP, DNS, DNSQR, wrpcap
+from scapy.all import DNS, DNSQR, IP, TCP, UDP, Ether, wrpcap
 
 packets = [
     Ether() / IP(src="192.168.1.10", dst="8.8.8.8") / TCP(sport=12345, dport=80),

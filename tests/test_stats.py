@@ -1,10 +1,11 @@
 from netscope.models import PacketInfo
-from netscope.stats import(
+from netscope.stats import (
     protocol_distribution,
     top_ports,
     top_talkers,
     traffic_over_time,
 )
+
 
 def make_packet(src_ip="10.0.0.1", dst_ip="10.0.0.2", src_port=1000, dst_port=80, protocol="TCP", size=100, timestamp=1.0):
     return PacketInfo(

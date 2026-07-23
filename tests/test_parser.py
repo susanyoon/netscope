@@ -1,6 +1,6 @@
+from netscope.flows import aggregate_flows
 from netscope.models import PacketInfo
 from netscope.parser import parse_pcap
-from netscope.flows import aggregate_flows
 
 
 def test_parse_pcap_returns_all_ip_packets():

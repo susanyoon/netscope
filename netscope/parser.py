@@ -1,4 +1,4 @@
-from scapy.all import rdpcap, IP, TCP, UDP
+from scapy.all import IP, TCP, UDP, rdpcap
 
 from netscope.models import PacketInfo
 

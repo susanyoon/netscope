@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from netscope.models import PacketInfo
 from netscope.stats import protocol_distribution, top_talkers, traffic_over_time
 
+
 def chart_protocol_distribution(packets: list[PacketInfo], output_path: str) -> None:
     """
     Save a bar chart of packets per protocol.
@@ -50,7 +51,7 @@ def chart_traffic_over_time(packets: list[PacketInfo], output_path: str, bucket_
         raise ValueError("No packets to chart.")
     
     start = min(buckets.keys())
-    times = [t - start for t in buckets.keys()]  # seconds since capture start
+    times = [t - start for t in buckets]  # seconds since capture start
     volumes = list(buckets.values())
 
     fig, ax = plt.subplots(figsize=(10, 5))
